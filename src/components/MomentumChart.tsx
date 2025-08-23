@@ -10,8 +10,8 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import zoomPlugin from 'chartjs-plugin-zoom'
 import type { HistoryData } from '../types/gem'
-
 
 ChartJS.register(
   LineElement,
@@ -20,7 +20,8 @@ ChartJS.register(
   LinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  zoomPlugin
 )
 
 function getColor(i: number) {
@@ -66,7 +67,24 @@ export default function MomentumChart() {
           data={{ labels, datasets }}
           options={{
             responsive: true,
-            plugins: { legend: { position: 'top' } },
+            plugins: {
+              legend: { position: 'top' },
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x' // przesuwanie w osi X
+                },
+                zoom: {
+                  wheel: {
+                    enabled: true // zoom kółkiem myszy
+                  },
+                  pinch: {
+                    enabled: true // zoom pinch na touchpadzie/telefonie
+                  },
+                  mode: 'x' // zoom tylko w osi X (czas)
+                }
+              }
+            },
             scales: {
               y: { title: { display: true, text: 'Momentum (%)' } },
               x: { title: { display: true, text: 'Data' } }
