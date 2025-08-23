@@ -72,16 +72,16 @@ export default function MomentumChart() {
               zoom: {
                 pan: {
                   enabled: true,
-                  mode: 'x' // przesuwanie w osi X
+                  mode: 'x'
                 },
                 zoom: {
                   wheel: {
-                    enabled: true // zoom kółkiem myszy
+                    enabled: true
                   },
                   pinch: {
-                    enabled: true // zoom pinch na touchpadzie/telefonie
+                    enabled: true
                   },
-                  mode: 'x' // zoom tylko w osi X (czas)
+                  mode: 'x'
                 }
               }
             },
