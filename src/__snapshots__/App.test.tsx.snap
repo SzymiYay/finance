@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App component > App matches snapshot 1`] = `
+<DocumentFragment>
+  <h1>
+    ETF Momentum (%)
+  </h1>
+  <table
+    id="results-table"
+  >
+    <thead>
+      <tr>
+        <th>
+          ETF
+        </th>
+        <th>
+          12M Momentum (%)
+        </th>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+  <p>
+    Loading chart...
+  </p>
+</DocumentFragment>
+`;
