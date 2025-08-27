@@ -12,6 +12,7 @@ import {
 } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
 import type { HistoryData } from '../types/gem'
+import styles from './MomentumChart.module.css'
 
 ChartJS.register(
   LineElement,
@@ -62,7 +63,7 @@ export default function MomentumChart() {
 
   return (
     <>
-      <div id="chart-container">
+      <div className={styles.chartContainer}>
         <Line
           data={{ labels, datasets }}
           options={{

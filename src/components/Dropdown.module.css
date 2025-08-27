@@ -1,0 +1,27 @@
+.dropdown {
+  margin: 10px 0;
+}
+
+.button {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  font-weight: bold;
+  background: #0077cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background: #005fa3;
+}
+
+.content {
+  padding: 10px;
+  background: #f9f9f9;
+  border-left: 3px solid #0077cc;
+  margin-top: 5px;
+  border-radius: 4px;
+}

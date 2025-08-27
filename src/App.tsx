@@ -1,4 +1,6 @@
 import './App.css'
+import Copyrights from './components/Copyrights'
+import Description from './components/Description'
 import MomentumChart from './components/MomentumChart'
 import ResultsTable from './components/ResultsTable'
 
@@ -6,9 +8,10 @@ function App() {
   return (
     <>
       <>
-        <h1>ETF Momentum (%)</h1>
+        <Description />
         <ResultsTable />
         <MomentumChart />
+        <Copyrights />
       </>
     </>
   )
