@@ -63,36 +63,38 @@ export default function MomentumChart() {
 
   return (
     <>
-      <div className={styles.chartContainer}>
-        <Line
-          data={{ labels, datasets }}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { position: 'top' },
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'x'
-                },
+      <div className={styles.chartWrapper}>
+        <div className={styles.chartContainer}>
+          <Line
+            data={{ labels, datasets }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'top' },
                 zoom: {
-                  wheel: {
-                    enabled: true
+                  pan: {
+                    enabled: true,
+                    mode: 'x'
                   },
-                  pinch: {
-                    enabled: true
-                  },
-                  mode: 'x'
+                  zoom: {
+                    wheel: {
+                      enabled: true
+                    },
+                    pinch: {
+                      enabled: true
+                    },
+                    mode: 'x'
+                  }
                 }
+              },
+              scales: {
+                y: { title: { display: true, text: 'Momentum (%)' } },
+                x: { title: { display: true, text: 'Data' } }
               }
-            },
-            scales: {
-              y: { title: { display: true, text: 'Momentum (%)' } },
-              x: { title: { display: true, text: 'Data' } }
-            }
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     </>
   )

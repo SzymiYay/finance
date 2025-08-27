@@ -1,6 +1,19 @@
-.chart-container {
+.chartWrapper {
   width: 100%;
-  max-width: 900px;
-  margin: 40px auto;
+  overflow-x: auto;
+}
+
+.chartContainer {
+  width: 150%;
+  min-width: 400px;
+  margin: 20px auto;
   padding: 0 10px;
+  height: 600px;
+}
+
+@media (min-width: 768px) {
+  .chartContainer {
+    width: 100%;
+    max-width: 1280;
+  }
 }
