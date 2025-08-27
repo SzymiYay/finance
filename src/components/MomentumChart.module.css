@@ -1,19 +1,7 @@
-.chartWrapper {
-  width: 100%;
-  overflow-x: auto;
-}
-
 .chartContainer {
-  width: 150%;
-  min-width: 400px;
+  width: 100%;
+  max-width: 1280px;
   margin: 20px auto;
   padding: 0 10px;
   height: 600px;
-}
-
-@media (min-width: 768px) {
-  .chartContainer {
-    width: 100%;
-    max-width: 1280;
-  }
 }

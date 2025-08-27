@@ -39,6 +39,8 @@ function getColor(i: number) {
 
 export default function MomentumChart() {
   const [history, setHistory] = useState<HistoryData | null>(null)
+  const isMobile = window.innerWidth < 768
+  const mobileDays = 120
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}/data/history.json`)
@@ -89,7 +91,11 @@ export default function MomentumChart() {
                 }
               },
               scales: {
-                y: { title: { display: true, text: 'Momentum (%)' } },
+                y: {
+                  title: { display: true, text: 'Momentum (%)' },
+                  min: isMobile ? history.index.length - mobileDays : undefined,
+                  max: isMobile ? history.index.length : undefined
+                },
                 x: { title: { display: true, text: 'Data' } }
               }
             }}
