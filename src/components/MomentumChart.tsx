@@ -92,32 +92,34 @@ export default function MomentumChart() {
             </button>
           ))}
         </div>
-        <Line
-          data={{ labels, datasets }}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { position: 'top' },
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'x'
+        <div className={styles.chart}>
+          <Line
+            data={{ labels, datasets }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: 'top' },
+                zoom: {
+                  pan: {
+                    enabled: true,
+                    mode: 'x'
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  title: { display: true, text: 'Momentum (%)' }
+                },
+                x: {
+                  title: { display: true, text: 'Data' },
+                  min: minX,
+                  max: maxX
                 }
               }
-            },
-            scales: {
-              y: {
-                title: { display: true, text: 'Momentum (%)' }
-              },
-              x: {
-                title: { display: true, text: 'Data' },
-                min: minX,
-                max: maxX
-              }
-            }
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     </>
   )
