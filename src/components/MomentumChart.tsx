@@ -37,10 +37,20 @@ function getColor(i: number) {
   return colors[i % colors.length]
 }
 
+const ranges: Record<string, number | null> = {
+  All: null,
+  '6M': 180,
+  '3M': 90,
+  '1M': 30,
+  '2W': 14,
+  '1W': 7
+}
+
 export default function MomentumChart() {
   const [history, setHistory] = useState<HistoryData | null>(null)
-  const isMobile = window.innerWidth < 768
-  const mobileDays = 120
+  const [range, setRanges] = useState<string>(
+    window.innerWidth < 768 ? '3M' : 'All'
+  )
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}/data/history.json`)
@@ -63,44 +73,51 @@ export default function MomentumChart() {
     tension: 0.1
   }))
 
+  const totalPoints = history.index.length
+  const days = ranges[range]
+  const minX = days ? totalPoints - days : undefined
+  const maxX = totalPoints
+
   return (
     <>
-      <div className={styles.chartWrapper}>
-        <div className={styles.chartContainer}>
-          <Line
-            data={{ labels, datasets }}
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { position: 'top' },
-                zoom: {
-                  pan: {
-                    enabled: true,
-                    mode: 'x'
-                  },
-                  zoom: {
-                    wheel: {
-                      enabled: true
-                    },
-                    pinch: {
-                      enabled: true
-                    },
-                    mode: 'x'
-                  }
-                }
-              },
-              scales: {
-                y: {
-                  title: { display: true, text: 'Momentum (%)' },
-                  min: isMobile ? history.index.length - mobileDays : undefined,
-                  max: isMobile ? history.index.length : undefined
-                },
-                x: { title: { display: true, text: 'Data' } }
-              }
-            }}
-          />
+      <div className={styles.chartContainer}>
+        <div className={styles.buttons}>
+          {Object.keys(ranges).map((key) => (
+            <button
+              key={key}
+              onClick={() => setRanges(key)}
+              className={range === key ? styles.active : ''}
+            >
+              {key}
+            </button>
+          ))}
         </div>
+        <Line
+          data={{ labels, datasets }}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top' },
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x'
+                }
+              }
+            },
+            scales: {
+              y: {
+                title: { display: true, text: 'Momentum (%)' }
+              },
+              x: {
+                title: { display: true, text: 'Data' },
+                min: minX,
+                max: maxX
+              }
+            }
+          }}
+        />
       </div>
     </>
   )

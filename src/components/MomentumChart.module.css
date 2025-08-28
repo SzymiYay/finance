@@ -5,3 +5,31 @@
   padding: 0 10px;
   height: 600px;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  padding: 6px 12px;
+  border: 1px solid #0077cc;
+  background: white;
+  color: #0077cc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.buttons button:hover {
+  background: #0077cc;
+  color: white;
+}
+
+.buttons .active {
+  background: #0077cc;
+  color: white;
+}
