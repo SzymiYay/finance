@@ -104,6 +104,15 @@ export default function MomentumChart() {
                   pan: {
                     enabled: true,
                     mode: 'x'
+                  },
+                  zoom: {
+                    wheel: {
+                      enabled: true
+                    },
+                    pinch: {
+                      enabled: true
+                    },
+                    mode: 'x'
                   }
                 }
               },
