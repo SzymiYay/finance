@@ -33,6 +33,11 @@ export default function Description() {
           technologicznego, jeśli inwestor chce bardziej aktywnie zarządzać
           portfelem.
         </p>
+        <p>
+          Dzięki temu strategia stara się <em>unikać długich bess</em> i{' '}
+          <em>łapać trendy wzrostowe</em>.
+        </p>
+
         <h3>Podstawowe zasady:</h3>
         <div>
           <ul>
@@ -49,11 +54,6 @@ export default function Description() {
             </li>
           </ul>
         </div>
-
-        <p>
-          Dzięki temu strategia stara się <em>unikać długich bess</em> i{' '}
-          <em>łapać trendy wzrostowe</em>.
-        </p>
 
         <h3>Opis ETF:</h3>
         <div>

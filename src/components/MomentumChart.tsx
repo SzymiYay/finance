@@ -48,6 +48,7 @@ const ranges: Record<string, number | null> = {
 
 export default function MomentumChart() {
   const [history, setHistory] = useState<HistoryData | null>(null)
+  const [selected, setSelected] = useState<string[]>([])
   const [range, setRanges] = useState<string>(
     window.innerWidth < 768 ? '3M' : 'All'
   )
@@ -55,7 +56,10 @@ export default function MomentumChart() {
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}/data/history.json`)
       .then((res) => res.json())
-      .then((data: HistoryData) => setHistory(data))
+      .then((data: HistoryData) => {
+        setHistory(data)
+        setSelected(data.columns)
+      })
       .catch((err) => console.error('Data loading error:', err))
   }, [])
 
@@ -65,13 +69,23 @@ export default function MomentumChart() {
     new Date(d).toLocaleDateString('pl-PL')
   )
 
-  const datasets = history.columns.map((ticker, i) => ({
-    label: ticker,
-    data: history.data.map((row) => row[i]),
-    borderColor: getColor(i),
-    fill: false,
-    tension: 0.1
-  }))
+  const datasets = history.columns
+    .filter((ticker) => selected.includes(ticker))
+    .map((ticker, i) => ({
+      label: ticker,
+      data: history.data.map((row) => row[i]),
+      borderColor: getColor(i),
+      fill: false,
+      tension: 0.1
+    }))
+
+  const toggleEtf = (ticker: string) => {
+    setSelected((prev) =>
+      prev.includes(ticker)
+        ? prev.filter((t) => t !== ticker)
+        : [...prev, ticker]
+    )
+  }
 
   const totalPoints = history.index.length
   const days = ranges[range]
@@ -128,6 +142,23 @@ export default function MomentumChart() {
               }
             }}
           />
+        </div>
+        <div className={styles.filters}>
+          {history.columns.map((ticker) => (
+            <label
+              key={ticker}
+              className={`${styles.checkbox} ${
+                selected.includes(ticker) ? styles.active : ''
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={selected.includes(ticker)}
+                onChange={() => toggleEtf(ticker)}
+              />
+              {ticker}
+            </label>
+          ))}
         </div>
       </div>
     </>
