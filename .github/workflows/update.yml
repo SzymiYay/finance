@@ -2,7 +2,7 @@ name: Update ETF Data
 
 on:
   schedule:
-    - cron: '0 6 * * *' # codziennie o 6:00 UTC (8:00 w Polsce)
+    - cron: '0 6 1 * *' # codziennie o 6:00 UTC (8:00 w Polsce)
   workflow_dispatch: # możliwość ręcznego uruchomienia
 
 permissions:
