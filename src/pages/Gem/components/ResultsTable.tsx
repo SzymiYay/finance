@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { ResultsData } from '../types/gem'
+import type { ResultsData } from '../../../types/gem'
 import styles from './ResultsTable.module.css'
 
 export default function ResultsTable() {

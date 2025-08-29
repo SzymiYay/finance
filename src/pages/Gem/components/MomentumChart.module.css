@@ -28,17 +28,20 @@
   color: #0077cc;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.4rem;
 }
 
 .buttons button:hover {
-  background: #0077cc;
-  color: white;
+  background: #e6f2ff;
 }
 
 .buttons .active {
   background: #0077cc;
   color: white;
+}
+
+.buttons .active:hover {
+  background: #0077cc;
 }
 
 .filters {
@@ -50,7 +53,7 @@
 }
 
 .checkbox {
-  font-size: 0.9rem;
+  font-size: 1.4rem;
   padding: 6px 12px;
   border: 1px solid #0077cc;
   border-radius: 4px;

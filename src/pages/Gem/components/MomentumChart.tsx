@@ -11,7 +11,7 @@ import {
   Legend
 } from 'chart.js'
 import zoomPlugin from 'chartjs-plugin-zoom'
-import type { HistoryData } from '../types/gem'
+import type { HistoryData } from '../../../types/gem'
 import styles from './MomentumChart.module.css'
 
 ChartJS.register(
