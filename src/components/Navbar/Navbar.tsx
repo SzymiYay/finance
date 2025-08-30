@@ -2,20 +2,11 @@ import { NavLink, useLocation } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
-  const location = useLocation()
-
-  const titles: Record<string, string> = {
-    '/': 'Home',
-    '/gem': 'GEM',
-    '/portfolio': 'Portfolio'
-  }
-
-  const currentTitle = titles[location.pathname] || 'Finance'
   return (
     <>
       <header className={styles.header}>
         <nav className={styles.navbar}>
-          <h2 className={styles.title}>{currentTitle}</h2>
+          <h2 className={styles.title}>Finance</h2>
           <div className={styles.links}>
             <NavLink
               to="/"
