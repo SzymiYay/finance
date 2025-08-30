@@ -42,7 +42,7 @@ export default function Navbar() {
               Portfolio
             </NavLink>
           </div>
-          <button>LOGIN</button>
+          <button className={styles.button}>LOGIN</button>
         </nav>
       </header>
     </>

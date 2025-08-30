@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home/Home'
 import Portfolio from './pages/Portfolio/Portfolio'
@@ -8,8 +8,6 @@ import Layout from './components/Layout/Layout'
 function App() {
   return (
     <>
-      <></>
-
       <BrowserRouter basename="/finance">
         <Routes>
           <Route path="/" element={<Layout />}>
