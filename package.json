@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "build": "tsc -b && vite build",
     "deploy": "gh-pages -d dist",
-    "check": "npm run lint && npm run test && npm run build && npm run test:e2e"
+    "check": "npm run lint && npm run test && npm run build && npm run test:e2e",
+    "prepare": "husky"
   },
   "dependencies": {
     "chart.js": "^4.5.0",
