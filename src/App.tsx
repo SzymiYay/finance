@@ -4,6 +4,7 @@ import Home from './pages/Home/Home'
 import Portfolio from './pages/Portfolio/Portfolio'
 import Gem from './pages/Gem/Gem'
 import Layout from './components/Layout/Layout'
+import NotFound from './pages/NotFound/NotFound'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/gem" element={<Gem />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>
