@@ -20,7 +20,7 @@ export type OpenAPIConfig = {
 }
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: import.meta.env.VITE_API_URL,
+  BASE: 'https://finance-backend-hpew.onrender.com',
   VERSION: '1.0.0',
   WITH_CREDENTIALS: false,
   CREDENTIALS: 'include',
