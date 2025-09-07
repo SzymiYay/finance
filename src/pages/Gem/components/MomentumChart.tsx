@@ -71,13 +71,16 @@ export default function MomentumChart() {
 
   const datasets = history.columns
     .filter((ticker) => selected.includes(ticker))
-    .map((ticker, i) => ({
-      label: ticker,
-      data: history.data.map((row) => row[i]),
-      borderColor: getColor(i),
-      fill: false,
-      tension: 0.1
-    }))
+    .map((ticker) => {
+      const colIndex = history.columns.indexOf(ticker)
+      return {
+        label: ticker,
+        data: history.data.map((row) => row[colIndex]),
+        borderColor: getColor(colIndex),
+        fill: false,
+        tension: 0.1
+      }
+    })
 
   const toggleEtf = (ticker: string) => {
     setSelected((prev) =>
