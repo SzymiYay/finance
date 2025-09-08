@@ -1,0 +1,15 @@
+name: Send API Request every 14 minutes
+
+on:
+  schedule:
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call API
+        run: |
+          curl -X GET "https://finance-backend-hpew.onrender.com/health" \
+            -H "Content-Type: application/json"
