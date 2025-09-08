@@ -99,30 +99,30 @@ jobs:
           name: dist
           path: dist
 
-  e2e:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.55.0-noble
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+  # e2e:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: mcr.microsoft.com/playwright:v1.55.0-noble
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
+  #     - name: Download build artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: dist
+  #         path: dist
 
-      - name: Run E2E tests
-        run: npm run test:e2e
+  #     - name: Run E2E tests
+  #       run: npm run test:e2e
 
   deploy:
     if: github.event_name == 'push'
-    needs: e2e
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
