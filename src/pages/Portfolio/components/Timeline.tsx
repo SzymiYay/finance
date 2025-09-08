@@ -28,7 +28,12 @@ export default function Timeline() {
     ]
   }
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <div className={styles.chartContainer}>
+        <p>Loading...</p>
+      </div>
+    )
 
   return (
     <>

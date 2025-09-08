@@ -13,11 +13,17 @@ export default function TransactionList() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <section className={styles.container}>
+        <p>Loading...</p>
+      </section>
+    )
 
   return (
     <>
       <section className={styles.container}>
+        <h3>Lista transakcji</h3>
         <table className={styles.table}>
           <thead>
             <tr>

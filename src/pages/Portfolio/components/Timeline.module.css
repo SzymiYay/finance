@@ -1,4 +1,6 @@
 .chartContainer {
+  max-width: 138rem;
+  margin: 0 auto;
   background: #fff;
   padding: 20px 30px;
   border-radius: 8px;

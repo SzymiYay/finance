@@ -13,7 +13,12 @@ export default function Stats() {
       .finally(() => setLoading(false))
   }, [])
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <section className={styles.container}>
+        <p>Loading...</p>
+      </section>
+    )
 
   return (
     <>
