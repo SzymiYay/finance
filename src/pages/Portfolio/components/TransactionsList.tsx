@@ -1,56 +1,116 @@
 import { useEffect, useState } from 'react'
-import { type Transaction, TransactionsService } from '../../../api'
-import styles from './TransactionsList.module.css'
+import { TransactionSortableFields, type Transaction } from '../../../api'
+import { TransactionsClient } from '../../../clients/transactions.client'
+import { DataTable, type Column } from '../../../components/DataTable/DataTable'
 
 export default function TransactionList() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [total, setTotal] = useState(0)
+  const [sortBy, setSortBy] = useState<TransactionSortableFields>(
+    TransactionSortableFields.OPEN_TIME
+  )
+  const [order, setOrder] = useState<'ASC' | 'DESC'>('DESC')
 
   useEffect(() => {
-    TransactionsService.getAll()
-      .then((res) => setTransactions(res))
+    setLoading(true)
+
+    TransactionsClient.getAll({
+      sortBy,
+      order,
+      limit,
+      offset: (page - 1) * limit
+    })
+      .then((res) => {
+        return new Promise<typeof res>((resolve) =>
+          setTimeout(() => resolve(res), 0)
+        )
+      })
+      .then((res) => {
+        setTransactions(res.data)
+        setTotal(res.total)
+      })
       .catch((err) => console.error('API error:', err))
       .finally(() => setLoading(false))
-  }, [])
+  }, [page, limit, sortBy, order])
 
-  if (loading)
-    return (
-      <section className={styles.container}>
-        <p>Loading...</p>
-      </section>
-    )
+  const totalPages = Math.ceil(total / limit)
+
+  const columns: Column<Transaction>[] = [
+    {
+      header: 'Symbol',
+      accessor: 'symbol',
+      sortable: true,
+      field: 'symbol'
+    },
+    { header: 'Typ', accessor: 'type' },
+    { header: 'Wolumen', accessor: 'volume', sortable: true, field: 'volume' },
+    {
+      header: 'Cena otwarcia',
+      accessor: 'openPrice',
+      sortable: true,
+      field: 'openPrice'
+    },
+    {
+      header: 'Aktualna cena',
+      accessor: 'marketPrice',
+      sortable: true,
+      field: 'marketPrice'
+    },
+    {
+      header: 'Zysk/Strata',
+      accessor: (row) => (
+        <span style={{ color: (row.grossPL ?? 0) >= 0 ? 'green' : 'red' }}>
+          {row.grossPL}
+        </span>
+      ),
+      sortable: true,
+      field: 'grossPL'
+    },
+    {
+      header: 'Waluta',
+      accessor: 'currency',
+      sortable: true,
+      field: 'currency'
+    }
+  ]
+
+  const handleSortChange = (field: string) => {
+    if (sortBy === field) {
+      setOrder(order === 'ASC' ? 'DESC' : 'ASC')
+    } else {
+      setSortBy(field as TransactionSortableFields)
+      setOrder('ASC')
+    }
+  }
+
+  const handleLimitChange = (newLimit: number) => {
+    const firstVisibleItemIndex = (page - 1) * limit + 1
+    const newPage = Math.ceil(firstVisibleItemIndex / newLimit)
+
+    setLimit(newLimit)
+    setPage(newPage)
+  }
 
   return (
     <>
-      <section className={styles.container}>
-        <h3>Lista transakcji</h3>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Symbol</th>
-              <th>Typ</th>
-              <th>Wolumen</th>
-              <th>Cena otwarcia</th>
-              <th>Aktualna cena</th>
-              <th>Zysk/Strata</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((tx) => (
-              <tr key={tx.id}>
-                <td>{tx.symbol}</td>
-                <td>{tx.type}</td>
-                <td>{tx.volume}</td>
-                <td>{tx.openPrice}</td>
-                <td>{tx.marketPrice}</td>
-                <td style={{ color: (tx.grossPL ?? 0) >= 0 ? 'green' : 'red' }}>
-                  {tx.grossPL}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <DataTable<Transaction>
+        title="Lista transakcji"
+        data={transactions}
+        columns={columns}
+        page={page}
+        total={total}
+        limit={limit}
+        totalPages={totalPages}
+        sortBy={sortBy}
+        order={order}
+        loading={loading}
+        onPageChange={setPage}
+        onLimitChange={handleLimitChange}
+        onSortChange={handleSortChange}
+      />
     </>
   )
 }

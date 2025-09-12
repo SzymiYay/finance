@@ -31,23 +31,25 @@ export default function Navbar() {
         <nav className={styles.navbar}>
           <h2 className={styles.title}>Finance</h2>
 
-          <div className={styles.links}>
-            <NavLink to="/" className={styles.link}>
-              Home
-            </NavLink>
-            <NavLink to="/gem" className={styles.link}>
-              GEM
-            </NavLink>
-            <NavLink to="/portfolio" className={styles.link}>
-              Portfolio
-            </NavLink>
-          </div>
+          <div className={styles.right}>
+            <div className={styles.links}>
+              <NavLink to="/" className={styles.link}>
+                Home
+              </NavLink>
+              <NavLink to="/gem" className={styles.link}>
+                GEM
+              </NavLink>
+              <NavLink to="/portfolio" className={styles.link}>
+                Portfolio
+              </NavLink>
+            </div>
 
-          <div className={styles.actions}>
-            <button className={styles.button}>LOGIN</button>
-            <button className={styles.hamburger} onClick={handleOpen}>
-              ☰
-            </button>
+            <div className={styles.actions}>
+              {/* <button className={styles.button}>LOGIN</button> */}
+              <button className={styles.hamburger} onClick={handleOpen}>
+                ☰
+              </button>
+            </div>
           </div>
         </nav>
       </header>
