@@ -24,11 +24,6 @@ export default function TransactionList() {
       offset: (page - 1) * limit
     })
       .then((res) => {
-        return new Promise<typeof res>((resolve) =>
-          setTimeout(() => resolve(res), 0)
-        )
-      })
-      .then((res) => {
         setTransactions(res.data)
         setTotal(res.total)
       })

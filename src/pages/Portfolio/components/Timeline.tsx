@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { StatisticsService, type TimelinePoint } from '../../../api'
 import { Line } from 'react-chartjs-2'
 import styles from './Timeline.module.css'
+import type { ChartOptions, ScriptableContext, TooltipItem } from 'chart.js'
 
 export default function Timeline() {
   const [timeline, setTimeline] = useState<TimelinePoint[]>([])
@@ -14,16 +15,57 @@ export default function Timeline() {
       .finally(() => setLoading(false))
   }, [])
 
+  const options: ChartOptions<'line'> = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: function (ctx: TooltipItem<'line'>) {
+            return `Wartość: ${ctx.formattedValue} PLN`
+          }
+        }
+      }
+    },
+    interaction: { intersect: false, mode: 'index' as const },
+    scales: {
+      y: {
+        ticks: {
+          callback: (val: string | number) => `${val} PLN`
+        }
+      }
+    }
+  }
+
   const data = {
     labels: timeline.map((p) => p.date),
     datasets: [
       {
         label: 'Wartość portfela',
         data: timeline.map((p) => p.value),
-        borderColor: 'blue',
-        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        borderColor: '#007bff',
+        pointBackgroundColor: '#007bff',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: '#007bff',
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        tension: 0.25,
         fill: true,
-        tension: 0.2
+        backgroundColor: (context: ScriptableContext<'line'>) => {
+          const ctx = context.chart.ctx
+          const gradient = ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            context.chart.height
+          )
+          gradient.addColorStop(0, 'rgba(0, 123, 255, 0.3)')
+          gradient.addColorStop(1, 'rgba(0, 123, 255, 0)')
+          return gradient
+        }
       }
     ]
   }
@@ -38,7 +80,7 @@ export default function Timeline() {
   return (
     <>
       <div className={styles.chartContainer}>
-        <Line data={data} />
+        <Line data={data} options={options} />
       </div>
     </>
   )

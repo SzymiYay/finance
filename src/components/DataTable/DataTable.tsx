@@ -167,9 +167,11 @@ export function DataTable<T extends { id: string | number }>({
                 value={limit}
                 onChange={(e) => onLimitChange(Number(e.target.value))}
               >
-                {[5, 10, 25, 50, total].map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt === total ? 'Wszystkie' : opt}
+                {[5, 10, 25, 50, total].map((opt, idx) => (
+                  <option key={idx} value={opt}>
+                    {opt === total && ![5, 10, 25, 50].includes(opt)
+                      ? 'Wszystkie'
+                      : opt}
                   </option>
                 ))}
               </select>

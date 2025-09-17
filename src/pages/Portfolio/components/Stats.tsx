@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
-import { StatisticsService, type Statistics } from '../../../api'
+import {
+  StatisticsService,
+  StatisticsSortableFields,
+  type Statistics
+} from '../../../api'
 import { DataTable, type Column } from '../../../components/DataTable/DataTable'
 
 export default function Stats() {
@@ -8,20 +12,22 @@ export default function Stats() {
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
   const [total, setTotal] = useState(0)
-  const [sortBy, setSortBy] = useState<string>('symbol') //FIXME: naprawic po zmianie backendu
+  const [sortBy, setSortBy] = useState<StatisticsSortableFields>(
+    StatisticsSortableFields.SYMBOL
+  )
   const [order, setOrder] = useState<'ASC' | 'DESC'>('DESC')
 
   useEffect(() => {
     setLoading(true)
 
-    StatisticsService.getStats()
+    StatisticsService.getStats(sortBy, order, limit, (page - 1) * limit)
       .then((res) => {
-        setStats(res)
-        setTotal(6) //FIXME: naprawic po zmianie backendu
+        setStats(res.data)
+        setTotal(res.total)
       })
       .catch((err) => console.error('API error:', err))
       .finally(() => setLoading(false))
-  }, [])
+  }, [page, limit, sortBy, order])
 
   const totalPages = Math.ceil(total / limit)
 
@@ -78,7 +84,7 @@ export default function Stats() {
     if (sortBy === field) {
       setOrder(order === 'ASC' ? 'DESC' : 'ASC')
     } else {
-      setSortBy(field)
+      setSortBy(field as StatisticsSortableFields)
       setOrder('ASC')
     }
   }
@@ -103,7 +109,7 @@ export default function Stats() {
         totalPages={totalPages}
         sortBy={sortBy}
         order={order}
-        loading={loading}
+        loading={loading} 
         onPageChange={setPage}
         onLimitChange={handleLimitChange}
         onSortChange={handleSortChange}

@@ -5,20 +5,30 @@ import Portfolio from './pages/Portfolio/Portfolio'
 import Gem from './pages/Gem/Gem'
 import Layout from './components/Layout/Layout'
 import NotFound from './pages/NotFound/NotFound'
-import { useEffect } from 'react'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+)
 
 function App() {
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetch('https://finance-backend-hpew.onrender.com/health')
-        .then((res) => res.text())
-        .then((data) => console.log('Health check: ', data))
-        .catch((err) => console.error('Error health check:', err))
-    }, 14 * 60 * 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <>
       <BrowserRouter basename="/finance">
