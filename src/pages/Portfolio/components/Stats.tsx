@@ -5,6 +5,7 @@ import {
   type Statistics
 } from '../../../api'
 import { DataTable, type Column } from '../../../components/DataTable/DataTable'
+import TransactionsSubTable from '../../../components/DataTable/TransactionSubTable'
 
 export default function Stats() {
   const [stats, setStats] = useState<Statistics[]>([])
@@ -109,10 +110,11 @@ export default function Stats() {
         totalPages={totalPages}
         sortBy={sortBy}
         order={order}
-        loading={loading} 
+        loading={loading}
         onPageChange={setPage}
         onLimitChange={handleLimitChange}
         onSortChange={handleSortChange}
+        expandableRow={(stat) => <TransactionsSubTable symbol={stat.symbol} />}
       />
     </>
   )

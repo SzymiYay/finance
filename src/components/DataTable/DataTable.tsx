@@ -1,4 +1,4 @@
-import type React from 'react'
+import React from 'react'
 import styles from './DataTable.module.css'
 import { useEffect, useState } from 'react'
 
@@ -12,7 +12,7 @@ export interface Column<T> {
   align?: 'left' | 'center' | 'right'
 }
 
-export interface DataTabelProps<T> {
+export interface DataTableProps<T> {
   title: string
   data: T[]
   columns: Column<T>[]
@@ -28,6 +28,8 @@ export interface DataTabelProps<T> {
   onPageChange: (page: number) => void
   onLimitChange: (limit: number) => void
   onSortChange: (sortBy: string) => void
+
+  expandableRow?: (row: T) => React.ReactNode
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -44,9 +46,13 @@ export function DataTable<T extends { id: string | number }>({
   description,
   onPageChange,
   onLimitChange,
-  onSortChange
-}: DataTabelProps<T>) {
+  onSortChange,
+  expandableRow
+}: DataTableProps<T>) {
   const [showSkeleton, setShowSkeleton] = useState(false)
+  const [expandedRows, setExpandedRows] = useState<Set<string | number>>(
+    new Set()
+  )
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>
@@ -63,6 +69,15 @@ export function DataTable<T extends { id: string | number }>({
   const handleSort = (field?: string) => {
     if (!field || !onSortChange) return
     onSortChange(field)
+  }
+
+  const toggleRow = (id: string | number) => {
+    setExpandedRows((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(id)) newSet.delete(id)
+      else newSet.add(id)
+      return newSet
+    })
   }
 
   return (
@@ -112,22 +127,38 @@ export function DataTable<T extends { id: string | number }>({
                 </tr>
               ) : (
                 data.map((row) => (
-                  <tr key={row.id}>
-                    {columns.map((col, idx) => {
-                      const value =
-                        typeof col.accessor === 'function'
-                          ? col.accessor(row)
-                          : (row[col.accessor] as React.ReactNode)
-                      return (
-                        <td
-                          key={idx}
-                          style={{ textAlign: col.align ?? 'center' }}
-                        >
-                          {value}
+                  <React.Fragment key={row.id}>
+                    <tr>
+                      {columns.map((col, idx) => {
+                        const value =
+                          typeof col.accessor === 'function'
+                            ? col.accessor(row)
+                            : (row[col.accessor] as React.ReactNode)
+                        return (
+                          <td
+                            key={idx}
+                            style={{ textAlign: col.align ?? 'center' }}
+                          >
+                            {value}
+                          </td>
+                        )
+                      })}
+                      {expandableRow && (
+                        <td>
+                          <button onClick={() => toggleRow(row.id)}>
+                            {expandedRows.has(row.id) ? '-' : '+'}
+                          </button>
                         </td>
-                      )
-                    })}
-                  </tr>
+                      )}
+                    </tr>
+                    {expandableRow && expandedRows.has(row.id) && (
+                      <tr>
+                        <td colSpan={columns.length + 1}>
+                          {expandableRow(row)}
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))
               )}
             </tbody>
@@ -169,7 +200,7 @@ export function DataTable<T extends { id: string | number }>({
               >
                 {[5, 10, 25, 50, total].map((opt, idx) => (
                   <option key={idx} value={opt}>
-                    {opt === total && ![5, 10, 25, 50].includes(opt)
+                    {opt === total && ![5, 10, 25, 50].includes(opt) //FIXME: bug z total
                       ? 'Wszystkie'
                       : opt}
                   </option>

@@ -6,12 +6,16 @@ export const TransactionsClient = {
     order?: 'ASC' | 'DESC'
     limit?: number
     offset?: number
+    symbol?: string
+    getAll?: boolean
   }) {
     return TransactionsService.getAll(
       query.sortBy,
       query.order,
       query.limit,
-      query.offset
+      query.offset,
+      query.symbol,
+      query.getAll
     )
   }
 }
