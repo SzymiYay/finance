@@ -1,26 +1,30 @@
 {
-  "start_date": "2025-08-04",
-  "end_date": "2026-07-31",
+  "start_date": "2025-09-02",
+  "end_date": "2026-08-31",
   "results": [
     {
       "ETF": "EIMI.L",
-      "12M Momentum (%)": 31.29
+      "12M Momentum (%)": 36.71
+    },
+    {
+      "ETF": "CNDX.L",
+      "12M Momentum (%)": 29.23
     },
     {
       "ETF": "IWDA.L",
-      "12M Momentum (%)": 19.94
+      "12M Momentum (%)": 23.07
     },
     {
       "ETF": "CSPX.L",
-      "12M Momentum (%)": 18.88
+      "12M Momentum (%)": 22.94
     },
     {
       "ETF": "IB01.L",
-      "12M Momentum (%)": 3.86
+      "12M Momentum (%)": 3.77
     },
     {
       "ETF": "CBU0.L",
-      "12M Momentum (%)": 0.67
+      "12M Momentum (%)": 1.06
     }
   ]
 }
